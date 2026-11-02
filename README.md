@@ -13,12 +13,14 @@ Windows 上的命令速取面板。常驻托盘，热键唤出，检索后单击
 
 | | |
 |---|---|
-| 安装包 | `CommandManager-0.3.0-windows-x64-setup.exe` |
+| 安装包 | [CommandManager-0.3.0-windows-x64-setup.exe](https://github.com/ORyong/CommandManager/releases/download/v0.3.0/CommandManager-0.3.0-windows-x64-setup.exe) |
+| 免安装版 | [CommandManager-0.3.0-windows-x64-portable.zip](https://github.com/ORyong/CommandManager/releases/download/v0.3.0/CommandManager-0.3.0-windows-x64-portable.zip) |
+| 校验和 | [SHA256SUMS-0.3.0.txt](https://github.com/ORyong/CommandManager/releases/download/v0.3.0/SHA256SUMS-0.3.0.txt) |
 | 默认路径 | `%LOCALAPPDATA%\Programs\CommandManager` |
 | 系统要求 | Windows 10 1809 及以上，x64 |
 | 覆盖升级 | 从托盘退出旧版本，装到同一目录，`data` 保留 |
 
-免安装版解压到可写目录，运行 `command-manager.exe`。
+免安装版解压到可写目录，运行 `command-manager.exe`。静默安装：`setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART`。旧版本见 [Releases](https://github.com/ORyong/CommandManager/releases)。
 
 ## 使用
 
