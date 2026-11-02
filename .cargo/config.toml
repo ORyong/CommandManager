@@ -1,0 +1,7 @@
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[build]
+# 单个 rustc 峰值可到 1–2 GB；按逻辑核数满载容易把 16 GB 机器顶满，
+# 全量重编时限制并行度，慢一点但机器还能用。
+jobs = 4

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "builtin:docker_install_windows",
+    "name": "安装 Docker Desktop · Windows",
+    "command": "winget install --exact --id Docker.DockerDesktop",
+    "platforms": [
+      "Windows"
+    ]
+  },
+  {
+    "id": "builtin:docker_install_mac",
+    "name": "安装 Docker Desktop · macOS",
+    "command": "brew install --cask docker",
+    "platforms": [
+      "Mac"
+    ]
+  },
+  {
+    "id": "builtin:docker_install_ubuntu",
+    "name": "安装 Docker · Ubuntu 24.04",
+    "command": "sudo apt-get update && sudo apt-get install docker.io docker-compose-v2",
+    "platforms": [
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:docker_install_fedora",
+    "name": "安装 Docker · Fedora",
+    "command": "sudo dnf install moby-engine docker-compose",
+    "platforms": [
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:docker_logs",
+    "name": "Docker · 持续查看容器日志",
+    "command": "docker logs --follow --tail 100 container_name",
+    "platforms": [
+      "Windows",
+      "Mac",
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:docker_exec",
+    "name": "Docker · 进入容器 Shell",
+    "command": "docker exec -it container_name sh",
+    "platforms": [
+      "Windows",
+      "Mac",
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:compose_up",
+    "name": "Docker Compose · 启动开发服务",
+    "command": "docker compose up -d --build",
+    "platforms": [
+      "Windows",
+      "Mac",
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:conda_install_windows",
+    "name": "安装 Miniconda · Windows",
+    "command": "winget install --exact --id Anaconda.Miniconda3",
+    "platforms": [
+      "Windows"
+    ]
+  },
+  {
+    "id": "builtin:conda_install_mac",
+    "name": "安装 Miniconda · macOS",
+    "command": "brew install --cask miniconda",
+    "platforms": [
+      "Mac"
+    ]
+  },
+  {
+    "id": "builtin:conda_install_linux",
+    "name": "安装 Miniconda · Linux",
+    "command": "curl -fL -o miniconda-installer.sh \"https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -m).sh\" && bash miniconda-installer.sh",
+    "platforms": [
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:conda_create",
+    "name": "Conda · 创建 Python 开发环境",
+    "command": "conda create -n dev python=3.12",
+    "platforms": [
+      "Windows",
+      "Mac",
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:conda_export",
+    "name": "Conda · 导出环境依赖",
+    "command": "conda env export --from-history > environment.yml",
+    "platforms": [
+      "Windows",
+      "Mac",
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:conda_restore",
+    "name": "Conda · 从文件创建环境",
+    "command": "conda env create -f environment.yml",
+    "platforms": [
+      "Windows",
+      "Mac",
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:python_install_windows",
+    "name": "安装 Python 3.14 · Windows",
+    "command": "winget install --exact --id Python.Python.3.14",
+    "platforms": [
+      "Windows"
+    ]
+  },
+  {
+    "id": "builtin:python_install_mac",
+    "name": "安装 Python · macOS",
+    "command": "brew install python",
+    "platforms": [
+      "Mac"
+    ]
+  },
+  {
+    "id": "builtin:python_install_ubuntu",
+    "name": "安装 Python · Ubuntu/Debian",
+    "command": "sudo apt-get update && sudo apt-get install python3 python3-pip python3-venv",
+    "platforms": [
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:python_install_fedora",
+    "name": "安装 Python · Fedora",
+    "command": "sudo dnf install python3 python3-pip",
+    "platforms": [
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:git_install_windows",
+    "name": "安装 Git · Windows",
+    "command": "winget install --exact --id Git.Git",
+    "platforms": [
+      "Windows"
+    ]
+  },
+  {
+    "id": "builtin:git_install_mac",
+    "name": "安装 Git · macOS",
+    "command": "brew install git",
+    "platforms": [
+      "Mac"
+    ]
+  },
+  {
+    "id": "builtin:git_install_ubuntu",
+    "name": "安装 Git · Ubuntu/Debian",
+    "command": "sudo apt-get update && sudo apt-get install git",
+    "platforms": [
+      "Posix"
+    ]
+  },
+  {
+    "id": "builtin:git_install_fedora",
+    "name": "安装 Git · Fedora",
+    "command": "sudo dnf install git",
+    "platforms": [
+      "Posix"
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+/target/
+/dist/
+/data/
+
+# 本地预览与截图辅助脚本
+/.preview/
+/.preview-data/
+
+*.pdb
+*.pyc
+__pycache__/
