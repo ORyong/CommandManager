@@ -10,16 +10,13 @@ use serde::{Deserialize, Serialize};
 // ---------------------------------------------------------------- dimensions
 
 pub const PANEL_WIDTH: f32 = 520.0;
-/// The panel fills the whole window: GPUI windows are opaque, so any outer
-/// padding would show up as a grey halo around the content.
-pub const WINDOW_PAD: f32 = 0.0;
-pub const WINDOW_WIDTH: f32 = PANEL_WIDTH + WINDOW_PAD * 2.0;
+/// One fixed rectangle for every page: the panel sits in the middle of the
+/// screen instead of growing with the list, so it never reaches the taskbar.
+pub const PANEL_HEIGHT: f32 = 620.0;
 pub const SEARCH_BAR_HEIGHT: f32 = 40.0;
 /// The search field floats inside a padded block that also acts as drag handle.
 pub const SEARCH_BLOCK_PAD_TOP: f32 = 10.0;
 pub const SEARCH_BLOCK_PAD_BOTTOM: f32 = 8.0;
-pub const SEARCH_BLOCK_HEIGHT: f32 =
-    SEARCH_BLOCK_PAD_TOP + SEARCH_BAR_HEIGHT + SEARCH_BLOCK_PAD_BOTTOM;
 pub const TOOLBAR_HEIGHT: f32 = 40.0;
 pub const FOLDER_HEIGHT: f32 = 60.0;
 /// Folders and commands share one height so the list reads as a grid.
@@ -30,8 +27,6 @@ pub const BLOCK_GAP: f32 = 6.0;
 /// Inner padding of the scrolling list; it belongs to the chrome, not the rows.
 pub const LIST_PAD: f32 = 8.0;
 pub const FOOTER_HEIGHT: f32 = 46.0;
-/// Height of the empty-state block, used to size the window when nothing matches.
-pub const EMPTY_STATE_HEIGHT: f32 = 168.0;
 pub const RADIUS_PANEL: f32 = 12.0;
 pub const RADIUS_CONTROL: f32 = 7.0;
 pub const RADIUS_CHIP: f32 = 5.0;

@@ -693,7 +693,7 @@ impl Manager {
                         let _ = manage.update(cx, |this, cx| {
                             this.page = Page::Manage;
                             this.copy_deadline = None;
-                            window.resize(size(px(style::PANEL_WIDTH), px(600.0)));
+                            Manager::place(window, style::PANEL_WIDTH, style::PANEL_HEIGHT);
                             cx.notify();
                         });
                     }),
@@ -892,7 +892,7 @@ impl Manager {
                                 cx.stop_propagation();
                                 this.page = Page::Detail(detail.clone());
                                 this.copy_deadline = None;
-                                window.resize(size(px(style::PANEL_WIDTH), px(620.0)));
+                                Manager::place(window, style::PANEL_WIDTH, style::PANEL_HEIGHT);
                                 cx.notify();
                             })),
                     )

@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $cargoExe = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'
 if (-not (Test-Path -LiteralPath $cargoExe)) { $cargoExe = 'cargo' }

@@ -544,62 +544,45 @@ impl Manager {
         style::ROW_HEIGHT
     }
 
-    fn row_height(row: &VisibleRow) -> f32 {
-        match row {
-            VisibleRow::Folder(_) => style::FOLDER_HEIGHT,
-            VisibleRow::Command(command) => Self::command_height(command),
-        }
-    }
-
-    /// Height of the scrolling list content: one card for the folders, then
-    /// flat command rows, all separated by [`style::ROW_GAP`].
-    fn list_height(rows: &[VisibleRow]) -> f32 {
-        let folders = rows
-            .iter()
-            .take_while(|row| matches!(row, VisibleRow::Folder(_)))
-            .count();
-        let folder_height: f32 = rows[..folders].iter().map(Self::row_height).sum();
-        let command_height: f32 = rows[folders..].iter().map(Self::row_height).sum();
-        let mut blocks = 0usize;
-        let mut height = 0.0;
-        if folders > 0 {
-            blocks += 1;
-            // Card border top and bottom plus one divider between the rows.
-            height += 2.0 + folder_height + folders.saturating_sub(1) as f32;
-            if folders < rows.len() {
-                height += style::BLOCK_GAP;
-            }
-        }
-        if folders < rows.len() {
-            blocks += 1;
-            height += command_height;
-        }
-        height + blocks.saturating_sub(1) as f32 * style::ROW_GAP
-    }
-
-    fn fit_window(&self, window: &mut Window, cx: &App) {
-        if !matches!(self.page, Page::List) {
+    /// Put the panel back in the middle of the work area and keep it inside it.
+    ///
+    /// `Window::resize` takes logical pixels while the Win32 rectangle and work
+    /// area are physical, so the maths run in physical pixels. The panel keeps
+    /// its position when the requested size already matches, which is what
+    /// happens on every search keystroke — a drag stays where the user left it.
+    fn place(window: &mut Window, width: f32, height: f32) {
+        let area = platform::work_area(window);
+        if area.width() <= 0 || area.height() <= 0 {
+            window.resize(size(px(width), px(height)));
             return;
         }
-        let rows = self.rows(cx);
-        // Search block, toolbar, footer, list padding and the panel border.
-        let chrome = style::SEARCH_BLOCK_HEIGHT
-            + style::TOOLBAR_HEIGHT
-            + style::FOOTER_HEIGHT
-            + style::LIST_PAD * 2.0
-            + 2.0;
-        let tags = if self.tags_open {
-            style::TAGS_PANEL_HEIGHT
+        let scale = window.scale_factor().max(0.5);
+        let margin = (8.0 * scale).round() as i32;
+        let width = ((width * scale).round() as i32).min((area.width() - margin * 2).max(320));
+        let height = ((height * scale).round() as i32).min((area.height() - margin * 2).max(240));
+        let rect = platform::window_rect(window);
+        let resized = rect.width() != width || rect.height() != height;
+        let (left, top) = if resized {
+            (
+                area.left + (area.width() - width) / 2,
+                area.top + (area.height() - height) / 2,
+            )
         } else {
-            0.0
+            (rect.left, rect.top)
         };
-        let content = if rows.is_empty() {
-            style::EMPTY_STATE_HEIGHT
-        } else {
-            Self::list_height(&rows)
-        };
-        let height = chrome + tags + content + style::WINDOW_PAD * 2.0;
-        window.resize(size(px(style::WINDOW_WIDTH), px(height.min(620.0))));
+        // Centring is only safe after the size is clamped, and a drag may have
+        // left the panel hanging over the taskbar.
+        let left = left.clamp(area.left, (area.right - margin - width).max(area.left));
+        let top = top.clamp(area.top, (area.bottom - margin - height).max(area.top));
+        window.resize(size(px(width as f32 / scale), px(height as f32 / scale)));
+        if left != rect.left || top != rect.top {
+            platform::move_window(window, left, top);
+        }
+    }
+
+    /// Every page is one fixed rectangle: no more growing with the list.
+    fn fit_window(&self, window: &mut Window, _cx: &App) {
+        Self::place(window, style::PANEL_WIDTH, style::PANEL_HEIGHT);
     }
 
     fn rows(&self, cx: &App) -> Vec<VisibleRow> {
@@ -758,7 +741,7 @@ impl Manager {
         self.page = Page::Editor;
         self.status.clear();
         self.copy_deadline = None;
-        window.resize(size(px(style::PANEL_WIDTH), px(648.0)));
+        Self::place(window, style::PANEL_WIDTH, style::PANEL_HEIGHT);
         cx.notify();
     }
 
@@ -826,7 +809,7 @@ impl Manager {
         self.page = Page::Text(op);
         self.status.clear();
         self.status_deadline = None;
-        window.resize(size(px(style::PANEL_WIDTH), px(300.0)));
+        Self::place(window, style::PANEL_WIDTH, 300.0);
         cx.notify();
     }
 
@@ -860,7 +843,7 @@ impl Manager {
         self.copy_deadline = None;
         if let Some(handle) = cx.active_window() {
             let _ = handle.update(cx, |_, window, _| {
-                window.resize(size(px(style::PANEL_WIDTH), px(340.0)));
+                Self::place(window, style::PANEL_WIDTH, 340.0);
             });
         }
         cx.notify();
@@ -901,7 +884,7 @@ impl Manager {
         self.autostart = self.desktop.settings.autostart;
         self.page = Page::Settings;
         self.copy_deadline = None;
-        window.resize(size(px(style::PANEL_WIDTH), px(500.0)));
+        Self::place(window, style::PANEL_WIDTH, style::PANEL_HEIGHT);
         cx.notify();
     }
 

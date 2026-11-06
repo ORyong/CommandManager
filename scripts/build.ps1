@@ -1,4 +1,4 @@
-param([string]$InnoCompiler, [switch]$SkipBuild, [string]$ReleaseDirectory)
+﻿param([string]$InnoCompiler, [switch]$SkipBuild, [string]$ReleaseDirectory)
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $cargoExe = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'

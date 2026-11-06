@@ -57,7 +57,7 @@ fn run() -> anyhow::Result<()> {
             style::init(cx, desktop.settings.theme);
             let bounds = Bounds::centered(
                 None,
-                size(px(style::WINDOW_WIDTH), px(280.0)),
+                size(px(style::PANEL_WIDTH), px(style::PANEL_HEIGHT)),
                 cx,
             );
             let options = WindowOptions {
